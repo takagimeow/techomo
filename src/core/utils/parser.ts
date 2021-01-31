@@ -1,7 +1,7 @@
 import { Base } from 'src/core/classes/Base';
 import _ from 'lodash';
 
-type Relationship<T extends Base> = {
+export type Relationship<T extends Base> = {
   parent: T;
   children: Relationship<T>[];
 };

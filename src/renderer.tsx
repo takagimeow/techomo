@@ -33,16 +33,22 @@ import * as ReactDOM from 'react-dom';
 import { HashRouter as Router } from 'react-router-dom';
 import { App } from 'src/renderer/components/App';
 import { Layout } from 'src/renderer/components/Layout';
+import { Provider } from 'react-redux';
+import { configureStore } from 'src/store/configureStore';
 
 import 'tailwindcss/tailwind.css';
 import './index.css';
 
+const store = configureStore();
+
 const Index = () => (
-  <Router>
-    <Layout>
-      <App />
-    </Layout>
-  </Router>
+  <Provider store={store}>
+    <Router>
+      <Layout>
+        <App />
+      </Layout>
+    </Router>
+  </Provider>
 );
 
 ReactDOM.render(<Index />, document.getElementById('app'));

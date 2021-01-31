@@ -1,14 +1,22 @@
 import React from 'react';
-import ReactMarkdown from 'react-markdown';
-import { MemoNode } from 'components/MemoNode';
+import { useSelector } from 'react-redux';
+import { Memo, parseUniToMultiDimensional } from 'src/core';
+import _ from 'lodash';
+
+// eslint-disable-next-line import/extensions
+import { parseMultiDimensionalToElements } from './parser';
 
 export function MemoView() {
-  return (
-    <div className="">
-      <MemoNode level={0} />
-      <MemoNode level={1} />
-      <MemoNode level={2} />
-      <MemoNode level={0} />
-    </div>
+  // const dispatch = useDispatch();
+  const memos: Memo[] = useSelector((reduxState: any) => reduxState.core.memos);
+  const memoIds: string[] = useSelector((reduxState: any) => reduxState.core.memoIds);
+  const selectedChannelId: string = useSelector(
+    (reduxState: any) => reduxState.core.selectedChannelId,
   );
+  const filteredMemos = _.filter(memos, {
+    groupId: selectedChannelId,
+  });
+  const multiDimensional = parseUniToMultiDimensional(memos, filteredMemos, '', memoIds);
+
+  return <div className="">{parseMultiDimensionalToElements(multiDimensional, 0)}</div>;
 }
