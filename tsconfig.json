@@ -15,6 +15,7 @@
     "paths": {
       "*": ["node_modules/*"],
       "components/*": ["./src/renderer/components/*"],
+      "screens/*": ["./src/renderer/screens/*"],
       "src/*": ["./src/*"]
     }
   },

@@ -1,6 +1,6 @@
 import ReactMde, { Suggestion } from 'react-mde';
 
-export async function* save (data: any) {
+export async function* save(data: any) {
   // Promise that waits for "time" milliseconds
   const wait = function (time: number) {
     return new Promise<void>((a, r) => {
@@ -20,7 +20,7 @@ export async function* save (data: any) {
 
   // returns true meaning that the save was successful
   return true;
-};
+}
 
 export function loadSuggestions(text: any): Promise<Suggestion[]> {
   return new Promise((accept, reject) => {

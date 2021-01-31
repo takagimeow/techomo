@@ -111,6 +111,7 @@
     "react-markdown": "^5.0.3",
     "react-mde": "^11.0.6",
     "react-router-dom": "^5.2.0",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat"
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat",
+    "techomo-core": "^1.0.1"
   }
 }
