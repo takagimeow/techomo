@@ -16,7 +16,8 @@
       "*": ["node_modules/*"],
       "components/*": ["./src/renderer/components/*"],
       "screens/*": ["./src/renderer/screens/*"],
-      "src/*": ["./src/*"]
+      "src/*": ["./src/*"],
+      "ts-utils": ["./utils/test-utils"],
     }
   },
   "include": [

@@ -4,3 +4,6 @@ webpack.*.js
 postcss.config.js
 *.config.*
 tsconfig.json
+
+__tests__
+utils/core

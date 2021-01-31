@@ -11,7 +11,9 @@
     "publish": "electron-forge publish",
     "lint": "eslint --ext .ts .",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "keywords": [],
   "author": {
@@ -79,9 +81,14 @@
     "@storybook/addon-essentials": "^6.1.14",
     "@storybook/addon-links": "^6.1.14",
     "@storybook/react": "^6.1.14",
+    "@testing-library/react": "^11.2.3",
+    "@types/faker": "^5.1.6",
+    "@types/jest": "^26.0.20",
+    "@types/lowdb": "^1.0.9",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@types/react-router-dom": "^5.1.7",
+    "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.0.1",
     "@typescript-eslint/parser": "^4.0.1",
     "babel-loader": "^8.2.2",
@@ -93,10 +100,13 @@
     "eslint-config-prettier": "^7.1.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-prettier": "^3.3.1",
+    "faker": "^5.2.0",
     "fork-ts-checker-webpack-plugin": "^5.0.14",
+    "jest": "^26.6.3",
     "node-loader": "^1.0.1",
     "postcss-loader": "^4.1.0",
     "style-loader": "^1.2.1",
+    "ts-jest": "^26.5.0",
     "ts-loader": "^8.0.2",
     "tsconfig-paths-webpack-plugin": "^3.3.0",
     "typescript": "^4.0.2"
@@ -105,6 +115,8 @@
     "@tailwindcss/postcss7-compat": "^2.0.2",
     "autoprefixer": "9",
     "electron-squirrel-startup": "^1.0.0",
+    "electron-store": "^7.0.0",
+    "lodash": "^4.17.20",
     "postcss": "7",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
@@ -112,6 +124,7 @@
     "react-mde": "^11.0.6",
     "react-router-dom": "^5.2.0",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat",
-    "techomo-core": "^1.0.1"
+    "uuid": "^8.3.2",
+    "xss": "^1.0.8"
   }
 }
