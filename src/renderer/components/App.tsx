@@ -11,6 +11,9 @@ export function App() {
             renders the first one that matches the current URL. */}
       <Switch>
         <Route exact path="/">
+          <HomeScreen />
+        </Route>
+        <Route exact path="/memo">
           <MemoScreen />
         </Route>
         <Route path="/about">
