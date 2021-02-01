@@ -1,6 +1,6 @@
 import React, { useReducer } from 'react';
 import { useHistory } from 'react-router-dom';
-import { WorkspaceBuilder } from 'src/core';
+import { ChannelBuilder } from 'src/core';
 import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -8,6 +8,7 @@ import {
   changeCoreChannels,
   changeCoreSelectedChannelId,
 } from 'src/actions/coreActions';
+import { ipcRenderer } from 'electron';
 import { changeValue } from './actions';
 import { reducer } from './redux';
 
@@ -24,18 +25,23 @@ export function CreateChannelScreen() {
   });
   const handleSave = (workspaceName: string) => {
     const channelId = uuidv4();
-    const channel = new WorkspaceBuilder()
+    const channel = new ChannelBuilder()
       .id(channelId)
       .groupId(selectedWorkspaceId)
       .index(0)
       .name(workspaceName)
-      .channels([])
+      .memos([])
       .color('#000000')
       .build();
     dispatch(changeCoreChannels([...channels, channel]));
     dispatch(changeCoreChannelIds([...channelIds, channelId]));
     dispatch(changeCoreSelectedChannelId(channel.get('id') || ''));
+    ipcRenderer.send('save-channels-message', JSON.stringify([...channels, channel]));
   };
+
+  ipcRenderer.on('save-channels-reply', (event, arg) => {
+    console.log(arg);
+  });
 
   return (
     <div className="h-screen flex flex-col py-1 px-2">

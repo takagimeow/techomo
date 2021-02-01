@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useHistory } from 'react-router-dom';
 
 export function HomeScreen() {
-  console.log('Home Screen');
   const history = useHistory();
   return (
     <div className="py-2 px-4">

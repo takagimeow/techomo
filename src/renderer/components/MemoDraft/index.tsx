@@ -12,6 +12,7 @@ import {
   changeCoreMemos,
   changeCoreSelectedMemoId,
 } from 'src/actions/coreActions';
+import { ipcRenderer } from 'electron';
 import { changeValue } from './actions';
 import { reducer } from './redux';
 
@@ -48,7 +49,13 @@ export function MemoDraft() {
     }
     dispatch(changeCoreSelectedMemoId(''));
     localDispatch(changeValue(''));
+    ipcRenderer.send('save-memos-message', JSON.stringify([...memos, memo]));
   };
+
+  ipcRenderer.on('save-memos-reply', () => {
+    ipcRenderer.send('save-memoIds-message', JSON.stringify(memoIds));
+  });
+
   return (
     <div className="flex flex-col px-3 py-3 border-b border-gray-400">
       <div className="py-2">

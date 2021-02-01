@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Memo, parseUniToMultiDimensional } from 'src/core';
 import _ from 'lodash';
 
+// eslint-disable-next-line import/extensions
+import { Relationship } from 'src/core/utils/parser';
 // eslint-disable-next-line import/extensions
 import { parseMultiDimensionalToElements } from './parser';
 
@@ -13,10 +15,16 @@ export function MemoView() {
   const selectedChannelId: string = useSelector(
     (reduxState: any) => reduxState.core.selectedChannelId,
   );
-  const filteredMemos = _.filter(memos, {
-    groupId: selectedChannelId,
-  });
-  const multiDimensional = parseUniToMultiDimensional(memos, filteredMemos, '', memoIds);
+  const [multiDimensional, setMultiDimensional] = useState<Relationship<Memo>[]>([]);
 
-  return <div className="">{parseMultiDimensionalToElements(multiDimensional, 0)}</div>;
+  useEffect(() => {
+    const filteredMemos = _.filter(memos, {
+      groupId: selectedChannelId,
+    });
+    const newMultiDimensinal = parseUniToMultiDimensional(memos, filteredMemos, '', memoIds);
+    setMultiDimensional(newMultiDimensinal);
+  }, [memos, selectedChannelId, memoIds]);
+
+  const x = useCallback(parseMultiDimensionalToElements, [multiDimensional]);
+  return <div className="">{x(multiDimensional, 0)}</div>;
 }

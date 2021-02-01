@@ -11,7 +11,6 @@ export function ChannelNavigation() {
     (reduxState: any) => reduxState.core.selectedWorkspaceId,
   );
   const channels: Channel[] = useSelector((reduxState: any) => reduxState.core.channels);
-  console.log('channels: ', channels);
   const filteredChannels = _.filter(channels, {
     groupId: selectedWorkspaceId,
   }) as Channel[];

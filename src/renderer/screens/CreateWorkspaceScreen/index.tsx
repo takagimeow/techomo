@@ -8,6 +8,7 @@ import {
   changeCoreWorkspaces,
   changeCoreSelectedWorkspaceId,
 } from 'src/actions/coreActions';
+import { ipcRenderer } from 'electron';
 import { changeValue } from './actions';
 import { reducer } from './redux';
 
@@ -33,7 +34,12 @@ export function CreateWorkspaceScreen() {
     dispatch(changeCoreWorkspaces([...workspaces, workspace]));
     dispatch(changeCoreWorkspaceIds([...workspaceIds, workspaceId]));
     dispatch(changeCoreSelectedWorkspaceId(workspaceId));
+    ipcRenderer.send('save-workspaces-message', JSON.stringify([...workspaces, workspace]));
   };
+
+  ipcRenderer.on('save-workspaces-reply', (event, arg) => {
+    console.log(arg);
+  });
 
   return (
     <div className="h-screen flex flex-col py-1 px-2">
