@@ -42,6 +42,7 @@ export function MemoDraft() {
       .name('')
       .body(state.value)
       .color('#000000')
+      .saved(false)
       .build();
     dispatch(changeCoreMemos([...memos, memo]));
     if (selectedMemoId === '') {
@@ -80,10 +81,10 @@ export function MemoDraft() {
       </div>
       <div className="flex flex-row justify-end">
         <div
-          className="rounded-md border border-gray-800 py-2 px-3 bg-blue-600"
+          className="hover:bg-blue-700 rounded-md border border-gray-800 py-2 px-3 bg-blue-600"
           onClick={handleSave}
         >
-          <p className="text-cneter text-blue-50">投稿する</p>
+          <p className="select-none text-cneter text-blue-50">投稿する</p>
         </div>
       </div>
     </div>

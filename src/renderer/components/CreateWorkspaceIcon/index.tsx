@@ -6,7 +6,7 @@ export function CreateWorkspaceIcon() {
 
   return (
     <div
-      className="border rounded-xl bg-white"
+      className="select-none border rounded-xl bg-white hover:bg-gray-200"
       onClick={() => {
         history.push('/createworkspace');
       }}

@@ -32,6 +32,7 @@ export function CreateChannelScreen() {
       .name(workspaceName)
       .memos([])
       .color('#000000')
+      .saved(false)
       .build();
     dispatch(changeCoreChannels([...channels, channel]));
     dispatch(changeCoreChannelIds([...channelIds, channelId]));

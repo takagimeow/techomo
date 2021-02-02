@@ -23,7 +23,7 @@ export function ChannelNavigation() {
     <div className="px-2 py-2 h-screen overflow-y-auto">
       {filteredChannels.map((channel) => (
         <div
-          className={`font-bold text-xl ${
+          className={`rounded-md hover:bg-gray-100 select-none font-bold text-xl ${
             channel.id === selectedChannelId ? 'text-black' : 'text-gray-500'
           }`}
           onClick={() => {
@@ -34,7 +34,7 @@ export function ChannelNavigation() {
           {channel.get('name')}
         </div>
       ))}
-      <div className="px-2 py-2">
+      <div className="rounded-md hover:bg-gray-100 select-none px-2 py-2">
         <div
           className="text-gray-300"
           onClick={() => {
