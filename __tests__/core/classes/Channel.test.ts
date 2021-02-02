@@ -24,6 +24,7 @@ describe('Channelクラス', () => {
         .name('')
         .bookmarks([])
         .color('')
+        .saved(false)
         .build();
       expect(channel.index).toBe(0);
     });
@@ -39,6 +40,7 @@ describe('Channelクラス', () => {
         .name(name)
         .bookmarks([])
         .color('')
+        .saved(false)
         .build();
       expect(channel.name).toBe('');
 
@@ -50,6 +52,7 @@ describe('Channelクラス', () => {
         .name(name)
         .bookmarks([])
         .color('')
+        .saved(false)
         .build();
       expect(channel.name).toBe(name);
     });
@@ -62,6 +65,7 @@ describe('Channelクラス', () => {
         .name('')
         .bookmarks([])
         .color('')
+        .saved(false)
         .build();
       channel.editName(name);
       expect(channel.name).toBe('');
@@ -79,6 +83,7 @@ describe('Channelクラス', () => {
         .name('')
         .bookmarks([])
         .color('')
+        .saved(false)
         .build();
       expect(channel.color).toBe('#000000');
 
@@ -89,6 +94,7 @@ describe('Channelクラス', () => {
         .name('')
         .bookmarks([])
         .color('#ffffff')
+        .saved(false)
         .build();
       expect(channel.color).toBe('#ffffff');
     });
@@ -101,6 +107,7 @@ describe('Channelクラス', () => {
         .name('')
         .bookmarks([])
         .color('')
+        .saved(false)
         .build();
       channel.editColor('hellow');
       expect(channel.color).toBe('#000000');

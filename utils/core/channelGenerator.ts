@@ -13,6 +13,7 @@ export function channelGenerator() {
     .memos([])
     .bookmarks([])
     .color('#000000')
+    .saved(false)
     .build();
   return channel;
 }

@@ -14,4 +14,5 @@ module.exports = {
     'src',
     __dirname, // the root directory
   ],
+  setupFilesAfterEnv: ['<rootDir>/__mocks__/electronMock.js'],
 };

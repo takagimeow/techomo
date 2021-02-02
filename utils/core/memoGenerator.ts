@@ -13,6 +13,7 @@ export function memoGenerator() {
     .name(name)
     .color('')
     .body(body)
+    .saved(false)
     .build();
   return memo;
 }

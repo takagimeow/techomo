@@ -24,6 +24,8 @@ export abstract class Base {
 
   color?: string;
 
+  saved?: boolean;
+
   createdAt?: Date;
 
   updatedAt?: Date;
@@ -34,6 +36,7 @@ export abstract class Base {
     this.index = common.has(props, 'index');
     this.name = common.has(props, 'name');
     this.color = common.has(props, 'color');
+    this.saved = common.has(props, 'saved');
 
     const createdAt = new Date();
     this.createdAt = createdAt;
@@ -66,7 +69,15 @@ export abstract class Base {
     return this;
   }
 
-  updateUpdatedAt(updatedAt: Date): this & Exclude<Pick<this, 'updatedAt'>, undefined> {
+  editSaved(saved: boolean): this & Exclude<Pick<this, 'saved'>, undefined> {
+    return Object.assign(this, { saved });
+  }
+
+  editCreatedAt(createdAt: Date): this & Exclude<Pick<this, 'createdAt'>, undefined> {
+    return Object.assign(this, { createdAt });
+  }
+
+  editUpdatedAt(updatedAt: Date): this & Exclude<Pick<this, 'updatedAt'>, undefined> {
     return Object.assign(this, { updatedAt });
   }
 }

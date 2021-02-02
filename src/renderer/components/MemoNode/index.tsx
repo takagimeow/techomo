@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import ReactMarkdown from 'react-markdown';
-import { useDispatch } from 'react-redux';
-import { changeCoreSelectedMemoId } from 'src/actions/coreActions';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  changeCoreMemoIds,
+  changeCoreMemos,
+  changeCoreSelectedMemoId,
+} from 'src/actions/coreActions';
 import { convertDateToAgoText } from 'src/utils/converter';
+import { Memo } from 'src/core/classes/Memo';
+import { deleteParentNode } from 'src/core/utils/delete';
+import { ipcRenderer } from 'electron';
 
 export function MemoNode({
   id = '',
@@ -16,9 +23,35 @@ export function MemoNode({
   createdAt: Date | null;
 }) {
   const dispatch = useDispatch();
+  const memos: Memo[] = useSelector((reduxState: any) => reduxState.core.memos);
+  const memoIds: string[] = useSelector((reduxState: any) => reduxState.core.memoIds);
+  const selectedMemoId: string = useSelector((reduxState: any) => reduxState.core.selectedMemoId);
 
+  const handleDelete = useCallback(() => {
+    const { nodes, ids } = deleteParentNode(memos, id);
+    const newMemoIds = [...ids] as string[];
+    for (let i = 0; i < memoIds.length; i += 1) {
+      if (memoIds[i] !== id) {
+        newMemoIds.push(memoIds[i]);
+      }
+    }
+    dispatch(changeCoreMemos(nodes));
+    dispatch(changeCoreMemoIds(newMemoIds));
+    ipcRenderer.send('save-memos-message', JSON.stringify(nodes));
+  }, [memos, memoIds, id]);
   return (
-    <div className="border-b border-gray-400">
+    <div
+      className={`border-b border-gray-400 ${
+        selectedMemoId !== id ? 'hover:bg-gray-100' : 'bg-gray-100'
+      }`}
+      onClick={() => {
+        if (selectedMemoId === id) {
+          dispatch(changeCoreSelectedMemoId(''));
+        } else {
+          dispatch(changeCoreSelectedMemoId(id));
+        }
+      }}
+    >
       <div className={`pl-${level * 2}`}>
         <div className={`flex flex-row border-l-${level >= 1 ? 2 : 0} border-blue-600`}>
           <div className="w-2/12 py-6 px-1 text-center">
@@ -38,16 +71,23 @@ export function MemoNode({
         <div className="w-10/12">
           <div className="flex flex-row justify-between pb-2">
             <div
-              className="text-sm"
+              className="hover:text-gray-400 select-none text-sm"
               onClick={() => {
                 dispatch(changeCoreSelectedMemoId(id));
               }}
             >
-              コメントをつける
+              コメント
             </div>
-            <div className="text-sm text-center">お気に入りに登録する</div>
-            <div className="text-sm text-center">共有する</div>
-            <div className="text-sm text-center"></div>
+            <div className="hover:text-gray-400 select-none text-sm text-center">
+              お気に入りに登録
+            </div>
+            <div
+              className="hover:text-gray-400 select-none text-sm text-center"
+              onClick={handleDelete}
+            >
+              削除
+            </div>
+            <div className="hover:text-gray-400 select-none text-sm text-center"></div>
           </div>
         </div>
       </div>

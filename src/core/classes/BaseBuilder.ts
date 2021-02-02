@@ -37,6 +37,24 @@ export abstract class BaseBuilder {
     return this;
   }
 
+  saved(saved: Exclude<Base[keyof Pick<Base, 'saved'>], undefined>) {
+    this._base = Object.assign(this._base, { saved: false });
+    this._base.editSaved(saved);
+    return this;
+  }
+
+  createdAt(createdAt: Exclude<Base[keyof Pick<Base, 'createdAt'>], undefined>) {
+    this._base = Object.assign(this._base, { createdAt: new Date() });
+    this._base.editCreatedAt(createdAt);
+    return this;
+  }
+
+  updatedAt(updatedAt: Exclude<Base[keyof Pick<Base, 'updatedAt'>], undefined>) {
+    this._base = Object.assign(this._base, { updatedAt: new Date() });
+    this._base.editUpdatedAt(updatedAt);
+    return this;
+  }
+
   build() {
     return this._base;
   }

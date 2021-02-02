@@ -30,6 +30,7 @@ export function CreateWorkspaceScreen() {
       .name(workspaceName)
       .channels([])
       .color('#000000')
+      .saved(false)
       .build();
     dispatch(changeCoreWorkspaces([...workspaces, workspace]));
     dispatch(changeCoreWorkspaceIds([...workspaceIds, workspaceId]));

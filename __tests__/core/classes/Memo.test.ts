@@ -39,6 +39,7 @@ describe('Memoクラス', () => {
         .name(name)
         .body('')
         .color('')
+        .saved(false)
         .build();
       expect(memo.name).toBe('');
 
@@ -50,6 +51,7 @@ describe('Memoクラス', () => {
         .name(name)
         .body('')
         .color('')
+        .saved(false)
         .build();
       expect(memo.name).toBe(name);
     });
@@ -61,6 +63,7 @@ describe('Memoクラス', () => {
         .name('')
         .body('')
         .color('')
+        .saved(false)
         .build();
       let name = textGenerator(NAME_LENGTH_MAX + 1);
       memo.editName(name);
@@ -78,6 +81,7 @@ describe('Memoクラス', () => {
         .name('')
         .body(body)
         .color('')
+        .saved(false)
         .build();
       expect(memo.body).toBe('');
 
@@ -89,6 +93,7 @@ describe('Memoクラス', () => {
         .name('')
         .body(body)
         .color('')
+        .saved(false)
         .build();
       expect(memo.body).toBe(body);
     });
@@ -100,6 +105,7 @@ describe('Memoクラス', () => {
         .name('')
         .body('')
         .color('')
+        .saved(false)
         .build();
       let body = textGenerator(BODY_LENGTH_MAX + 1);
       memo.editBody(body);

@@ -15,6 +15,7 @@ describe('Workspaceクラス', () => {
         .name('')
         .channels([])
         .color('')
+        .saved(false)
         .build();
       const channel = channelGenerator();
 

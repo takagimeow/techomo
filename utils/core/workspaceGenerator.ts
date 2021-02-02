@@ -12,6 +12,7 @@ export function workspaceGenerator() {
     .name(name)
     .channels([])
     .color('#000000')
+    .saved(false)
     .build();
   return workspace;
 }

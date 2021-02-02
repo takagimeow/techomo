@@ -14,6 +14,7 @@ describe('一次元から多次元の配列に変換する関数', () => {
       .name('')
       .body('')
       .color('')
+      .saved(false)
       .build();
     let body = textGenerator(BODY_LENGTH_MAX);
     parentMemo.editBody(body);
@@ -26,6 +27,7 @@ describe('一次元から多次元の配列に変換する関数', () => {
         .name('')
         .body(body)
         .color('')
+        .saved(false)
         .build();
       return memo;
     });
@@ -55,6 +57,7 @@ describe('一次元から多次元の配列に変換する関数', () => {
       .name('')
       .body('')
       .color('')
+      .saved(false)
       .build();
     let body = textGenerator(BODY_LENGTH_MAX);
     parentMemo.editBody(body);
@@ -67,6 +70,7 @@ describe('一次元から多次元の配列に変換する関数', () => {
         .name('')
         .body(body)
         .color('')
+        .saved(false)
         .build();
       const childrenAA = [`childeMemoA_${index}`, `childeMemoB_${index}`].map(
         (childrenAAMemoId) => {
@@ -78,6 +82,7 @@ describe('一次元から多次元の配列に変換する関数', () => {
             .name('')
             .body(body)
             .color('')
+            .saved(false)
             .build();
 
           return childrenAAMemo;
