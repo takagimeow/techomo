@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useCallback, useReducer } from 'react';
 import ReactMde from 'react-mde';
 // @ts-ignore
 import ReactMarkdown from 'react-markdown';
@@ -28,7 +28,6 @@ export function MemoDraft() {
   const selectedMemoId: string = useSelector((reduxState: any) => reduxState.core.selectedMemoId);
   const memos = useSelector((reduxState: any) => reduxState.core.memos);
   const memoIds = useSelector((reduxState: any) => reduxState.core.memoIds);
-
   const handleChange = (newValue: string) => {
     localDispatch(changeValue(newValue));
   };
@@ -53,9 +52,11 @@ export function MemoDraft() {
     ipcRenderer.send('save-memos-message', JSON.stringify([...memos, memo]));
   };
 
-  ipcRenderer.on('save-memos-reply', () => {
+  const handleSaveMemosReply = useCallback(() => {
     ipcRenderer.send('save-memoIds-message', JSON.stringify(memoIds));
-  });
+  }, [memoIds]);
+
+  ipcRenderer.on('save-memos-reply', handleSaveMemosReply);
 
   return (
     <div className="flex flex-col px-3 py-3 border-b border-gray-400">

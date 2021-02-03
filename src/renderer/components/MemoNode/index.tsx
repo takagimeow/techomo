@@ -9,23 +9,34 @@ import {
 import { convertDateToAgoText } from 'src/utils/converter';
 import { Memo } from 'src/core/classes/Memo';
 import { deleteParentNode } from 'src/core/utils/delete';
+import { saveNode } from 'src/core/utils/save';
 import { ipcRenderer } from 'electron';
 
 export function MemoNode({
   id = '',
   body = '',
   level = 0,
+  saved = false,
   createdAt,
 }: {
   id: string;
   body: string;
   level: number;
+  saved?: boolean;
   createdAt: Date | null;
 }) {
   const dispatch = useDispatch();
   const memos: Memo[] = useSelector((reduxState: any) => reduxState.core.memos);
   const memoIds: string[] = useSelector((reduxState: any) => reduxState.core.memoIds);
   const selectedMemoId: string = useSelector((reduxState: any) => reduxState.core.selectedMemoId);
+
+  const handleSave = useCallback(() => {
+    const result = saveNode(memos, id);
+    const { nodes } = result;
+    dispatch(changeCoreMemos(nodes));
+    dispatch(changeCoreMemoIds(memoIds));
+    ipcRenderer.send('save-memos-message', JSON.stringify(nodes));
+  }, [memos, memoIds, id]);
 
   const handleDelete = useCallback(() => {
     const { nodes, ids } = deleteParentNode(memos, id);
@@ -39,6 +50,13 @@ export function MemoNode({
     dispatch(changeCoreMemoIds(newMemoIds));
     ipcRenderer.send('save-memos-message', JSON.stringify(nodes));
   }, [memos, memoIds, id]);
+
+  const handleSaveMemosReply = useCallback(() => {
+    ipcRenderer.send('save-memoIds-message', JSON.stringify(memoIds));
+  }, [memoIds]);
+
+  ipcRenderer.on('save-memos-reply', handleSaveMemosReply);
+
   return (
     <div
       className={`border-b border-gray-400 ${
@@ -78,7 +96,12 @@ export function MemoNode({
             >
               コメント
             </div>
-            <div className="hover:text-gray-400 select-none text-sm text-center">
+            <div
+              className={`select-none text-sm text-center ${
+                saved ? 'text-red-400 hover:text-red-200' : 'hover:text-gray-400'
+              }`}
+              onClick={handleSave}
+            >
               お気に入りに登録
             </div>
             <div

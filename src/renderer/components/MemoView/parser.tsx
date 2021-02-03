@@ -19,6 +19,7 @@ export function parseMultiDimensionalToElements(
         id={parent.id || ''}
         body={parent.body || ''}
         level={level}
+        saved={parent.saved}
         createdAt={parent.createdAt || null}
       />,
       ...childrenElements,

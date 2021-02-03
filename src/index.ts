@@ -96,5 +96,6 @@ ipcMain.on('save-memoIds-message', (event, args) => {
   store.set('memoIds', args);
   event.sender.send('save-memoIds-reply', 'done');
 });
+
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.

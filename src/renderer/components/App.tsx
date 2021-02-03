@@ -64,6 +64,7 @@ export function App() {
         .name(memoJson.name)
         .body(memoJson.body)
         .color(memoJson.color)
+        .saved(memoJson.saved)
         .build();
       return memo;
     });

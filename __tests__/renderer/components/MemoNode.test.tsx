@@ -5,9 +5,11 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { configureStore } from '../../../src/store/configureStore';
 import { MemoNode } from '../../../src/renderer/components/MemoNode';
 import * as coreActions from '../../../src/actions/coreActions';
+import { INITIAL_STATE as CORE_STATE } from '../../../src/reducers/coreReducer';
 import { Memo, MemoBuilder } from '../../../src/core';
 import faker from 'faker';
 import { ipcRenderer } from 'electron';
+import _ from 'lodash';
 
 jest.mock('electron');
 describe('メモ本体を表すコンポーネント', () => {
@@ -60,7 +62,7 @@ describe('メモ本体を表すコンポーネント', () => {
     /**
      * Arrange
      */
-    store.dispatch(coreActions.changeCoreMemos(memos));
+    store.dispatch(coreActions.changeCoreMemos([parentMemo, childMemo1, childMemo2]));
     store.dispatch(coreActions.changeCoreMemoIds([parentMemo.id as string]));
     changeCoreMemosSpy = jest.spyOn(coreActions, 'changeCoreMemos');
     changeCoreMemoIdsSpy = jest.spyOn(coreActions, 'changeCoreMemoIds');
@@ -69,6 +71,34 @@ describe('メモ本体を表すコンポーネント', () => {
     jest.clearAllMocks();
     // jest.resetAllMocks();
   });
+  it('お気に入りボタンが押されたとき、お気に入りに登録済みじゃなかったらお気に入りに登録されて更新される', async () => {
+    /**
+     * Arrange
+     */
+    const { getByText } = render(
+      <ReduxProvider store={store}>
+        <MemoNode
+          id={memos[0].id as string}
+          body={memos[0].body as string}
+          level={0}
+          saved={false}
+          createdAt={memos[0].createdAt as Date}
+        />
+      </ReduxProvider>,
+    );
+    /**
+     * Act
+     */
+    fireEvent.click(getByText('お気に入りに登録'));
+    /**
+     * Assert
+     */
+    await waitFor(() => {
+      console.log(getByText('お気に入りに登録').className);
+      expect(changeCoreMemosSpy).toBeCalled();
+    });
+  });
+  it.todo('お気に入りボタンが押されたとき、お気に入りに登録済みだったらお気に入りから外す');
   it('削除ボタンが押されたらそのノードの存在がreduxから消されれ、子ノードがあれば上位に昇格する', async () => {
     /**
      * Arrange
@@ -121,7 +151,10 @@ describe('メモ本体を表すコンポーネント', () => {
      * Assert
      */
     await waitFor(() => {
-      expect(ipcRenderer.send).toHaveBeenCalledWith('save-memos-message', JSON.stringify([childMemo1, childMemo2]));
+      expect(ipcRenderer.send).toHaveBeenCalledWith(
+        'save-memos-message',
+        JSON.stringify([childMemo1, childMemo2]),
+      );
     });
   });
 });

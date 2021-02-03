@@ -22,7 +22,7 @@ import {
   CORE_SELECTED_MEMO_ID_CHANGE,
 } from '../constants/Redux';
 
-const INITIAL_STATE = {
+export const INITIAL_STATE = {
   workspaces: [] as Workspace[],
   workspaceIds: [] as string[],
   channels: [] as Channel[],

@@ -33,7 +33,7 @@ export function deleteParentNode<T extends Base>(nodes: T[], targetId: string) {
   const childNodesIds = childNodes.map((node) => node.id as string);
 
   // 要素の更新を行う
-  let clonedNodes = nodes;
+  let clonedNodes = _.clone(nodes);
   childNodes.forEach((childNode) => {
     const index = _.findIndex(nodes, (node) => {
       if (childNode.id === node.id) {
