@@ -57,6 +57,7 @@ export function App() {
   ipcRenderer.on('restore-memos-reply', (event, arg) => {
     const memosJson = JSON.parse(arg);
     const memos = memosJson.map((memoJson: any) => {
+      console.log('memoJson: ', memoJson);
       const memo = new MemoBuilder()
         .id(memoJson.id)
         .groupId(memoJson.groupId)
@@ -65,6 +66,8 @@ export function App() {
         .body(memoJson.body)
         .color(memoJson.color)
         .saved(memoJson.saved)
+        .createdAt(new Date(memoJson.createdAt))
+        .updatedAt(new Date(memoJson.updatedAt))
         .build();
       return memo;
     });
